@@ -1,7 +1,5 @@
 package com.example.retrofittest3.api
 
-import android.widget.TextView
-import com.example.retrofittest3.R
 import com.example.retrofittest3.models.Movie
 import com.example.retrofittest3.models.Result
 import retrofit2.Call
@@ -12,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiController {
 
-    suspend fun getResultList():ArrayList<Movie>{
+    fun getResultList():ArrayList<Movie>{
         lateinit var movieList : ArrayList<Movie>
         val baseUrl = "https://api.themoviedb.org/"
         val retrofit = Retrofit.Builder()
