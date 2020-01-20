@@ -4,13 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofittest3.api.MovieService
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import com.example.retrofittest3.models.Result
-import com.example.retrofittest3.models.Movie
+import com.example.retrofittest3.views.MovieRecyclerAdapter
 import com.example.retrofittest3.views.MovieViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
@@ -58,7 +57,8 @@ class MainActivity : AppCompatActivity() {
 
 
                 recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-                movieAdapter = MovieRecyclerAdapter()
+                movieAdapter =
+                    MovieRecyclerAdapter()
                 recyclerView.adapter = movieAdapter
             }
 
