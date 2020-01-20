@@ -1,0 +1,42 @@
+package com.example.retrofittest3.api
+
+import android.widget.TextView
+import com.example.retrofittest3.R
+import com.example.retrofittest3.models.Movie
+import com.example.retrofittest3.models.Result
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+class ApiController {
+
+    suspend fun getResultList():ArrayList<Movie>{
+        lateinit var movieList : ArrayList<Movie>
+        val baseUrl = "https://api.themoviedb.org/"
+        val retrofit = Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        val service = retrofit.create(MovieService::class.java)
+        val call = service.getMovies()
+
+        call.enqueue(object : Callback<Result> {
+            override fun onFailure(call: Call<Result>, t: Throwable) {
+
+            }
+
+            override fun onResponse(call: Call<Result>, response: Response<Result>) {
+                val result : Result? = response.body()
+                movieList = result!!.movieList
+
+
+            }
+
+        })
+            return movieList
+    }
+
+}
