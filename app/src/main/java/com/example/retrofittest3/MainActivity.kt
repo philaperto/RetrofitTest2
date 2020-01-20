@@ -2,9 +2,13 @@ package com.example.retrofittest3
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
+import androidx.lifecycle.Observer
+
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.retrofittest3.api.MovieService
+import com.example.retrofittest3.models.Movie
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,22 +27,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // movieData = findViewById(R.id.text_view)
-        val movieViewModel = MovieViewModel()
+        val movieViewModel = MovieViewModel(application)
         // val movieList = movieViewModel.getMovieList()
 
        // movieData.text = movieList[4].title
 
 
-        val baseUrl = "https://api.themoviedb.org/"
+      /*  val baseUrl = "https://api.themoviedb.org/"
         val retrofit = Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         val service = retrofit.create(MovieService::class.java)
-        val call = service.getMovies()
+        val call = service.getMovies() */
 
-        call.enqueue(object : Callback<Result>{
+    /*    call.enqueue(object : Callback<Result>{
             override fun onFailure(call: Call<Result>, t: Throwable) {
                 movieData.text = t.message
             }
@@ -50,8 +54,21 @@ class MainActivity : AppCompatActivity() {
                 initRecyclerView()
                 movieAdapter.submitList(movieList)
             }
-       })
+       }) */
+        initRecyclerView()
+
+        movieViewModel.apiController.liveMovieList.observe(this, Observer{
+          //  newMovieList -> movieAdapter.submitList(newMovieList)
+            newMovieList -> startRecyclerView(newMovieList)
+        })
+        movieViewModel.apiController.getResultList()
+        Log.i("Tag", "BBBBBBBBBBBBBBB")
     }
+            private fun startRecyclerView(newMovieList : ArrayList<Movie>){
+                initRecyclerView()
+                movieAdapter.submitList(newMovieList)
+            }
+
 
             private fun initRecyclerView(){
 
@@ -61,5 +78,7 @@ class MainActivity : AppCompatActivity() {
                     MovieRecyclerAdapter()
                 recyclerView.adapter = movieAdapter
             }
-
+            private fun checkMovieList(testmovieList : ArrayList<Movie>){
+                Log.i("Tag", "AAAAAAAAAAAAAAAAA" + testmovieList[0].title)
+            }
 }

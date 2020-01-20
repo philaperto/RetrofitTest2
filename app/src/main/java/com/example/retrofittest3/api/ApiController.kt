@@ -1,5 +1,6 @@
 package com.example.retrofittest3.api
 
+import androidx.lifecycle.MutableLiveData
 import com.example.retrofittest3.models.Movie
 import com.example.retrofittest3.models.Result
 import retrofit2.Call
@@ -10,7 +11,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiController {
 
-    fun getResultList():ArrayList<Movie>{
+     var liveMovieList = MutableLiveData<ArrayList<Movie>>()
+
+    fun getResultList(){
         lateinit var movieList : ArrayList<Movie>
         val baseUrl = "https://api.themoviedb.org/"
         val retrofit = Retrofit.Builder()
@@ -29,12 +32,12 @@ class ApiController {
             override fun onResponse(call: Call<Result>, response: Response<Result>) {
                 val result : Result? = response.body()
                 movieList = result!!.movieList
-
+               liveMovieList.value = movieList
 
             }
 
         })
-            return movieList
+
     }
 
 }
