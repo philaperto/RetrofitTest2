@@ -6,13 +6,21 @@ import androidx.lifecycle.*
 import com.example.retrofittest3.MainActivity
 import com.example.retrofittest3.api.ApiController
 import com.example.retrofittest3.models.Movie
+import kotlin.coroutines.coroutineContext
 
-class MovieViewModel(application: Application) :AndroidViewModel(application), LifecycleOwner {
-    override fun getLifecycle(): Lifecycle {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+class MovieViewModel(application1: Application) : AndroidViewModel(application1), LifecycleOwner {
+
 
     val apiController = ApiController()
+
+    var liveMovieList = MutableLiveData<ArrayList<Movie>>()
+
+
+    override fun getLifecycle(): Lifecycle {
+        return 
+    }
+
+
 
 
 
@@ -21,9 +29,8 @@ class MovieViewModel(application: Application) :AndroidViewModel(application), L
         return result
     } */
     fun observeMovies(){
-
-        apiController.liveMovieList.observe(this,  Observer{
-
+        apiController.liveMovieList.observe(this,  Observer { observedMovieList ->
+            liveMovieList.value = observedMovieList
         })
     }
 

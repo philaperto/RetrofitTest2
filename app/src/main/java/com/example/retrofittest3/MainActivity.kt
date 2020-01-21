@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +23,11 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
 
     lateinit var movieData : TextView
+
     private lateinit var movieAdapter: MovieRecyclerAdapter
+
+    var liveMovieList = MutableLiveData<ArrayList<Movie>>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -55,14 +60,14 @@ class MainActivity : AppCompatActivity() {
                 movieAdapter.submitList(movieList)
             }
        }) */
-        initRecyclerView()
-
+       // initRecyclerView()
+        movieViewModel.observeMovies()
         movieViewModel.apiController.liveMovieList.observe(this, Observer{
           //  newMovieList -> movieAdapter.submitList(newMovieList)
             newMovieList -> startRecyclerView(newMovieList)
         })
         movieViewModel.apiController.getResultList()
-        Log.i("Tag", "BBBBBBBBBBBBBBB")
+       // Log.i("Tag", "BBBBBBBBBBBBBBB")
     }
             private fun startRecyclerView(newMovieList : ArrayList<Movie>){
                 initRecyclerView()
@@ -74,11 +79,10 @@ class MainActivity : AppCompatActivity() {
 
 
                 recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-                movieAdapter =
-                    MovieRecyclerAdapter()
+                movieAdapter = MovieRecyclerAdapter()
                 recyclerView.adapter = movieAdapter
             }
             private fun checkMovieList(testmovieList : ArrayList<Movie>){
-                Log.i("Tag", "AAAAAAAAAAAAAAAAA" + testmovieList[0].title)
+             //   Log.i("Tag", "AAAAAAAAAAAAAAAAA" + testmovieList[0].title)
             }
 }

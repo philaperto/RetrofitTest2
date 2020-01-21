@@ -39,5 +39,8 @@ class ApiController {
         })
 
     }
+    object RetroFitAPI {
+
+    }
 
 }
