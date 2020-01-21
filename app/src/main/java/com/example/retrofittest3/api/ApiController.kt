@@ -21,7 +21,7 @@ class ApiController {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val service = retrofit.create(MovieService::class.java)
+        val service = retrofit.create(MovieDBService::class.java)
         val call = service.getMovies()
 
         call.enqueue(object : Callback<Result> {
@@ -39,8 +39,6 @@ class ApiController {
         })
 
     }
-    object RetroFitAPI {
 
-    }
 
 }

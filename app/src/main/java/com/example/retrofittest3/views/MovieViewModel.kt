@@ -1,39 +1,47 @@
 package com.example.retrofittest3.views
 
-import android.app.Application
-import androidx.annotation.MainThread
+import android.util.Log
 import androidx.lifecycle.*
-import com.example.retrofittest3.MainActivity
 import com.example.retrofittest3.api.ApiController
+import com.example.retrofittest3.api.MovieDBService
+import com.example.retrofittest3.api.RetrofitRepo
 import com.example.retrofittest3.models.Movie
-import kotlin.coroutines.coroutineContext
+import com.example.retrofittest3.models.Result
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-class MovieViewModel(application1: Application) : AndroidViewModel(application1), LifecycleOwner {
-
-
-    val apiController = ApiController()
-
-    var liveMovieList = MutableLiveData<ArrayList<Movie>>()
+class MovieViewModel : ViewModel(){
 
 
-    override fun getLifecycle(): Lifecycle {
-        return 
+
+   private val retrofitRepo = RetrofitRepo()
+
+    private val _liveMovieList = MutableLiveData<ArrayList<Movie>>()
+    val liveMovieList: LiveData<ArrayList<Movie>>
+        get() = _liveMovieList
+
+    init{
+        getMovieList()
     }
 
+    fun getMovieList() {
 
 
 
+        val call = retrofitRepo.retroFitCall
+        call.enqueue(object : Callback<Result> {
+            override fun onFailure(call: Call<Result>, t: Throwable) {
+                Log.i("Tag","Schlecht.....")
+            }
 
-   /* fun getMovieList() : ArrayList<Movie>{
-        val result = apiController.getResultList()
-        return result
-    } */
-    fun observeMovies(){
-        apiController.liveMovieList.observe(this,  Observer { observedMovieList ->
-            liveMovieList.value = observedMovieList
+            override fun onResponse(call: Call<Result>, response: Response<Result>) {
+
+               _liveMovieList.value = response.body()?.movieList
+            }
+
         })
+
     }
-
-
 
 }

@@ -2,23 +2,15 @@ package com.example.retrofittest3
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.retrofittest3.api.MovieService
 import com.example.retrofittest3.models.Movie
-import retrofit2.Callback
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import com.example.retrofittest3.models.Result
 import com.example.retrofittest3.views.MovieRecyclerAdapter
 import com.example.retrofittest3.views.MovieViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Call
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         // movieData = findViewById(R.id.text_view)
-        val movieViewModel = MovieViewModel(application)
+        val movieViewModel = MovieViewModel()
         // val movieList = movieViewModel.getMovieList()
 
        // movieData.text = movieList[4].title
@@ -44,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val service = retrofit.create(MovieService::class.java)
+        val service = retrofit.create(MovieDBService::class.java)
         val call = service.getMovies() */
 
     /*    call.enqueue(object : Callback<Result>{
@@ -61,8 +53,8 @@ class MainActivity : AppCompatActivity() {
             }
        }) */
        // initRecyclerView()
-        movieViewModel.observeMovies()
-        movieViewModel.apiController.liveMovieList.observe(this, Observer{
+
+        movieViewModel.liveMovieList.observe(this, Observer{
           //  newMovieList -> movieAdapter.submitList(newMovieList)
             newMovieList -> startRecyclerView(newMovieList)
         })
