@@ -27,6 +27,7 @@ class MovieRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             )
         )
     }
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
             is MovieViewHolder -> {
@@ -34,12 +35,15 @@ class MovieRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
         }
     }
+
     override fun getItemCount(): Int {
             return items.size
     }
+
     fun submitList(movieList : List<Movie>){
         items = movieList
     }
+
     inner class MovieViewHolder (
         itemView : View
     ) : RecyclerView.ViewHolder(itemView){
@@ -48,7 +52,6 @@ class MovieRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val movieTitle: TextView = itemView.movie_title
 
         fun bind (movie : Movie){
-
             movieTitle.text = movie.title
 
             val requestOptions = RequestOptions()
@@ -61,6 +64,5 @@ class MovieRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 .into(movieImage)
         }
     }
-}
 
-    
+}

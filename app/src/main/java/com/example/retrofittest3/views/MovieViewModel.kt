@@ -7,7 +7,6 @@ import com.example.retrofittest3.models.Movie
 class MovieViewModel : ViewModel(){
 
     private val amitsRepo = MovieRepository()
-
     private var _liveMovieList = MutableLiveData<ArrayList<Movie>>()
 
     val liveMovieList: LiveData<ArrayList<Movie>>
@@ -17,9 +16,8 @@ class MovieViewModel : ViewModel(){
         getMovieListFromAmit()
     }
 
-    fun getMovieListFromAmit(){
+    private fun getMovieListFromAmit(){
         _liveMovieList = amitsRepo.getMoviesFromWebservice()
     }
-
 
 }

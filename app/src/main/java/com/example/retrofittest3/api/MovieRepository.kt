@@ -12,8 +12,7 @@ class MovieRepository {
     fun getMoviesFromWebservice():MutableLiveData<ArrayList<Movie>>{
 
         val retrofitCall = MovieRetrofitBuilder.apiService.getMovies()
-
-        var movielist =  MutableLiveData<ArrayList<Movie>>()
+        val movielist =  MutableLiveData<ArrayList<Movie>>()
 
         retrofitCall.enqueue(object : Callback<Result>{
 
@@ -29,4 +28,5 @@ class MovieRepository {
         })
         return movielist
     }
+
 }
