@@ -14,12 +14,38 @@ import kotlinx.android.synthetic.main.layout_movie_entry.view.*
 
 class MovieRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    inner class MovieViewHolder constructor(
+    private var items : List<Movie> = ArrayList()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return MovieViewHolder(
+            LayoutInflater.from(
+                parent.context
+            ).inflate(
+                R.layout.layout_movie_entry,
+                parent,
+                false
+            )
+        )
+    }
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(holder) {
+            is MovieViewHolder -> {
+                holder.bind(items[position])
+            }
+        }
+    }
+    override fun getItemCount(): Int {
+            return items.size
+    }
+    fun submitList(movieList : List<Movie>){
+        items = movieList
+    }
+    inner class MovieViewHolder (
         itemView : View
     ) : RecyclerView.ViewHolder(itemView){
 
         private val movieImage : ImageView = itemView.movie_Poster
-        val movieTitle: TextView = itemView.movie_title
+        private val movieTitle: TextView = itemView.movie_title
 
         fun bind (movie : Movie){
 
@@ -35,36 +61,6 @@ class MovieRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 .into(movieImage)
         }
     }
-    
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return MovieViewHolder(
-            LayoutInflater.from(
-                parent.context
-            ).inflate(
-                R.layout.layout_movie_entry,
-                parent,
-                false
-            )
-        )
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder) {
-            is MovieViewHolder -> {
-                holder.bind(items[position])
-            }
-        }
-    }
-
-    override fun getItemCount(): Int {
-            return items.size
-    }
-
-    fun submitList(movieList : List<Movie>){
-        items = movieList
-    }
-
-    private var items : List<Movie> = ArrayList()
 }
 
     
