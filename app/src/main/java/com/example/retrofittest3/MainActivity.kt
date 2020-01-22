@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
           //  newMovieList -> movieAdapter.submitList(newMovieList)
             newMovieList -> startRecyclerView(newMovieList)
         })
-        movieViewModel.apiController.getResultList()
+      //  movieViewModel.apiController.getResultList()
        // Log.i("Tag", "BBBBBBBBBBBBBBB")
     }
             private fun startRecyclerView(newMovieList : ArrayList<Movie>){

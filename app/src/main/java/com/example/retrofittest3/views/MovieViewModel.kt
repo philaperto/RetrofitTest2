@@ -2,9 +2,7 @@ package com.example.retrofittest3.views
 
 import android.util.Log
 import androidx.lifecycle.*
-import com.example.retrofittest3.api.ApiController
-import com.example.retrofittest3.api.MovieDBService
-import com.example.retrofittest3.api.RetrofitRepo
+import com.example.retrofittest3.api.*
 import com.example.retrofittest3.models.Movie
 import com.example.retrofittest3.models.Result
 import retrofit2.Call
@@ -16,21 +14,27 @@ class MovieViewModel : ViewModel(){
 
 
    private val retrofitRepo = RetrofitRepo()
+    private val amitsRepo = AmitsRepo()
 
-    private val _liveMovieList = MutableLiveData<ArrayList<Movie>>()
+    private var _liveMovieList = MutableLiveData<ArrayList<Movie>>()
     val liveMovieList: LiveData<ArrayList<Movie>>
         get() = _liveMovieList
 
     init{
-        getMovieList()
+        // getMovieList()
+        getMovieListFromAmit()
+    }
+
+    fun getMovieListFromAmit(){
+        _liveMovieList = amitsRepo.getMovies()
     }
 
     fun getMovieList() {
 
 
-
-        val call = retrofitRepo.retroFitCall
-        call.enqueue(object : Callback<Result> {
+        val retrofitCall = RetrofitBuilder.apiService.getMovies()
+       // val retrofitCall = retrofitRepo.retroFitCall
+        retrofitCall.enqueue(object : Callback<Result> {
             override fun onFailure(call: Call<Result>, t: Throwable) {
                 Log.i("Tag","Schlecht.....")
             }

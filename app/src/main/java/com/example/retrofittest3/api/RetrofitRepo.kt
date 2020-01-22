@@ -10,9 +10,7 @@ class RetrofitRepo {
     val retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl(baseUrl).build()
     val retrofitService = retrofit.create(MovieDBService::class.java)
     val retroFitCall = retrofitService.getMovies()
-
-
-
-
-
    }
+
+
+
