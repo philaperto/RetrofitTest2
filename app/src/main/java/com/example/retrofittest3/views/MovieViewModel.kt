@@ -1,23 +1,32 @@
 package com.example.retrofittest3.views
 
-import androidx.lifecycle.*
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.retrofittest3.Database.MovieDatabase
+
 import com.example.retrofittest3.api.*
 import com.example.retrofittest3.models.Movie
 
-class MovieViewModel : ViewModel(){
+class MovieViewModel(application :Application) : AndroidViewModel(application){
 
-    private val amitsRepo = MovieRepository()
+   val repository = MovieRepository()
     private var _liveMovieList = MutableLiveData<ArrayList<Movie>>()
 
     val liveMovieList: LiveData<ArrayList<Movie>>
         get() = _liveMovieList
 
-    init{
-        getMovieListFromAmit()
+   init{
+      //  val movieDao = MovieDatabase.getDatabase(application, viewModelScope).movieDao()
+      // repository = MovieRepository(movieDao)
+        getMovieList()
+
     }
 
-    private fun getMovieListFromAmit(){
-        _liveMovieList = amitsRepo.getMoviesFromWebservice()
+    private fun getMovieList(){
+        _liveMovieList = repository.getMovies()
     }
 
 }
