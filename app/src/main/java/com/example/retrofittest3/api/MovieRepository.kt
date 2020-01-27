@@ -1,5 +1,7 @@
 package com.example.retrofittest3.api
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.retrofittest3.Database.MovieDao
 import com.example.retrofittest3.models.Movie
@@ -8,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MovieRepository (){
+class MovieRepository (private val movieDao: MovieDao){
 
     fun getMovies():MutableLiveData<ArrayList<Movie>>{
 
@@ -16,7 +18,7 @@ class MovieRepository (){
         return getMoviesFromWebservice()
     }
     
-   private fun getMoviesFromWebservice():MutableLiveData<ArrayList<Movie>>{
+   private fun getMoviesFromWebservice():LiveData<ArrayList<Movie>>{
 
         val retrofitCall = MovieRetrofitBuilder.apiService.getMovies()
         val movieList =  MutableLiveData<ArrayList<Movie>>()
@@ -33,11 +35,18 @@ class MovieRepository (){
                }
             }
         })
+
         return movieList
     }
 
-    private fun getMoviesFromDatabase(){
+    private fun getMoviesFromDatabase(): LiveData<List<Movie>> {
+    return movieDao.getMovieList()
 
+    }
+
+     suspend fun insertMovies(movies : List<Movie>){
+        movieDao.insertAll(movies)
+         Log.i("tag","ruuuuuuuuunnnnniiiiiing")
     }
 
 }

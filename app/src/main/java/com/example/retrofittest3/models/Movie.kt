@@ -19,7 +19,7 @@ data class Movie(
     val release_date : String,
 
     @SerializedName("poster_path") @ColumnInfo (name = "poster_path")
-    val poster_path : String,
-    @SerializedName("poster_path2")
-val poster_path2 : String
+    val poster_path : String
+
 )
+

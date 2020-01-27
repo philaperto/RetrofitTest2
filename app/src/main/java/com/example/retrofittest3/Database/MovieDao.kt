@@ -1,5 +1,6 @@
 package com.example.retrofittest3.Database
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
@@ -10,8 +11,8 @@ import com.example.retrofittest3.models.Movie
 interface MovieDao {
 
     @Query ("Select * from movie_table")
-    fun getMovieList(): MutableLiveData<ArrayList<Movie>>
+    fun getMovieList(): LiveData<List<Movie>>
 
-    @Insert
-    fun insertAll(vararg movies :Movie)
+    @Insert(onConflict = 5)
+    suspend fun insertAll( movies :List<Movie>)
 }

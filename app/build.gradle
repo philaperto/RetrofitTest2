@@ -1,10 +1,12 @@
+apply plugin: 'kotlin-kapt'
+
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'kotlin-kapt'
+
 
 android {
     compileSdkVersion 29
@@ -27,6 +29,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
+    }
+}
+repositories {
+    mavenCentral()
 }
 
 dependencies {
@@ -42,9 +50,10 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:2.7.1"
     implementation 'com.google.code.gson:gson:2.8.6'
     // Room and Lifecycle dependencies
-    def version_room = "2.2.3"
-    implementation "androidx.room:room-runtime:$version_room"
-    implementation "androidx.room:room-ktx:$version_room"
+    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    implementation "androidx.room:room-ktx:$rootProject.roomVersion"
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
     def cardview_version = "1.0.0"
     implementation "androidx.cardview:cardview:$cardview_version"
@@ -64,5 +73,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.archLifecycleVersion"
 
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
+    kapt "android.arch.lifecycle:compiler:1.1.1"
+
 }

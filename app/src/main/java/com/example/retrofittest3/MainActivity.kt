@@ -2,9 +2,12 @@ package com.example.retrofittest3
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.viewModelScope
+
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.retrofittest3.Database.MovieDatabase
 import com.example.retrofittest3.models.Movie
 import com.example.retrofittest3.views.MovieRecyclerAdapter
 import com.example.retrofittest3.views.MovieViewModel
@@ -26,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
         movieViewModel.liveMovieList.observe(this, Observer{
                 newMovieList -> startRecyclerView(newMovieList)
+                movieViewModel.insertToDB(newMovieList)
         })
     }
 
@@ -34,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         movieAdapter = MovieRecyclerAdapter()
         recyclerView.adapter = movieAdapter
         movieAdapter.submitList(newMovieList)
+
     }
 
 
