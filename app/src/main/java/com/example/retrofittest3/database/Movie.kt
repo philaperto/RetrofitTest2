@@ -22,4 +22,3 @@ data class Movie(
     val poster_path : String
 
 )
-

@@ -33,13 +33,11 @@ class MovieRepository (private val movieDao: MovieDao){
                }
             }
         })
-
         return movieList
     }
 
     private fun getMoviesFromDatabase(): LiveData<List<Movie>> {
-    return movieDao.getMovieList()
-
+        return movieDao.getMovieList()
     }
 
      suspend fun insertMovies(movies : List<Movie>){
