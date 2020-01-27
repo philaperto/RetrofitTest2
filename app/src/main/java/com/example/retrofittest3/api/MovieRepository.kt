@@ -13,6 +13,14 @@ import retrofit2.Response
 class MovieRepository (private val movieDao: MovieDao){
 
     fun getMovies():LiveData<ArrayList<Movie>>{
+
+        // TODO: Check if internet connection is available
+        // TODO: Decide if you have to load from DB
+        // if (connection == true) {
+        // getMoviesFromWebservice()
+        // } else {
+        //   getMoviesFromDatabase()
+        // }
         return getMoviesFromWebservice()
     }
     
