@@ -1,11 +1,9 @@
-package com.example.retrofittest3.Database
+package com.example.retrofittest3.database
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.retrofittest3.models.Movie
 
 @Dao
 interface MovieDao {

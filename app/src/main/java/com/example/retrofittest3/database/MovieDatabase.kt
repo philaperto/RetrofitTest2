@@ -1,13 +1,10 @@
-package com.example.retrofittest3.Database
+package com.example.retrofittest3.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.retrofittest3.models.Movie
 import kotlinx.coroutines.CoroutineScope
-import java.security.AccessControlContext
-
 
 
 @Database(entities = [Movie::class], version = 1, exportSchema = false)
@@ -20,8 +17,7 @@ abstract class MovieDatabase : RoomDatabase(){
         private var INSTANCE: MovieDatabase? = null
 
         fun getDatabase(
-            context: Context,
-            scope : CoroutineScope
+            context: Context
             ): MovieDatabase {
             return INSTANCE ?: synchronized(this){
                 val instance = Room.databaseBuilder(

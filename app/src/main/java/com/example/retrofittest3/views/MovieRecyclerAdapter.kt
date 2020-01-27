@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.retrofittest3.R
-import com.example.retrofittest3.models.Movie
+import com.example.retrofittest3.database.Movie
 import kotlinx.android.synthetic.main.layout_movie_entry.view.*
 
 class MovieRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

@@ -1,6 +1,6 @@
 package com.example.retrofittest3.api
 
-import com.example.retrofittest3.models.Result
+import com.example.retrofittest3.database.Result
 import retrofit2.Call
 import retrofit2.http.GET
 

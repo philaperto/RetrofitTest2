@@ -2,13 +2,10 @@ package com.example.retrofittest3
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.viewModelScope
-
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.retrofittest3.Database.MovieDatabase
-import com.example.retrofittest3.models.Movie
+import com.example.retrofittest3.database.Movie
 import com.example.retrofittest3.views.MovieRecyclerAdapter
 import com.example.retrofittest3.views.MovieViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,7 +18,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setupView()
     }
 
@@ -38,8 +34,6 @@ class MainActivity : AppCompatActivity() {
         movieAdapter = MovieRecyclerAdapter()
         recyclerView.adapter = movieAdapter
         movieAdapter.submitList(newMovieList)
-
     }
-
 
 }
