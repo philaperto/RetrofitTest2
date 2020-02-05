@@ -1,33 +1,39 @@
 package com.example.retrofittest3.api
 
+
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.retrofittest3.database.MovieDao
 import com.example.retrofittest3.database.Movie
 import com.example.retrofittest3.database.Result
+import com.example.retrofittest3.util.InternetUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class MovieRepository (private val movieDao: MovieDao){
 
-    fun getMovies():LiveData<ArrayList<Movie>>{
+    init{
+        Log.i("tag", "MovieRepositoryInitialized@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@MovieRepositoryInitialized")
+    }
+    val movieList =  MutableLiveData<List<Movie>>()
 
-        // TODO: Check if internet connection is available
-        // TODO: Decide if you have to load from DB
-        // if (connection == true) {
-        // getMoviesFromWebservice()
-        // } else {
-        //   getMoviesFromDatabase()
-        // }
-        return getMoviesFromWebservice()
+    fun getMovies(context: Context): LiveData<List<Movie>>{
+        return if (InternetUtils.isInternetAvailable(context)){
+            Log.d("MovieRepo ", "We are in getMoviesFromWebservice")
+            getMoviesFromWebservice()
+        } else {
+            Log.d("MovieRepo ", "We are in getMoviesFromDatabase")
+            getMoviesFromDatabase()
+        }
     }
     
-   private fun getMoviesFromWebservice() : LiveData<ArrayList<Movie>>{
+   private fun getMoviesFromWebservice() : MutableLiveData<List<Movie>>{
 
         val retrofitCall = MovieRetrofitBuilder.apiService.getMovies()
-        val movieList =  MutableLiveData<ArrayList<Movie>>()
+
 
         retrofitCall.enqueue(object: Callback<Result>{
 
@@ -38,13 +44,15 @@ class MovieRepository (private val movieDao: MovieDao){
             override fun onResponse(call: Call<Result>, response: Response<Result>) {
                if (response.code() == 200) {
                    movieList.value = response.body()?.movieList
+
                }
             }
         })
         return movieList
     }
 
-    private fun getMoviesFromDatabase(): LiveData<List<Movie>> {
+     fun getMoviesFromDatabase(): LiveData<List<Movie>> {
+        Log.i("Tag","taking from Database @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
         return movieDao.getMovieList()
     }
 
@@ -52,5 +60,13 @@ class MovieRepository (private val movieDao: MovieDao){
         movieDao.insertAll(movies)
          Log.i("tag","ruuuuuuuuunnnnniiiiiing")
     }
-
+     suspend fun deleteAll(){
+         movieDao.deleteAll()
+     }
+    fun getMovieById(id : Int): LiveData<Movie> {
+        return movieDao.getMoviebyId(id)
+    }
+    fun deleteMoviebyId(id: Int){
+        movieDao.deleteMovieById(id)
+    }
 }
