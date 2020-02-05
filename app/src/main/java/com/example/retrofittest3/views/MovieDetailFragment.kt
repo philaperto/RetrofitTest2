@@ -51,6 +51,7 @@ class MovieDetailFragment : Fragment() {
         }
         Log.i("Ta@@@@@@@@@@@@@@@@@g", movieId.toString())
         setUpFragment()
+
     }
 
     fun setUpFragment(){
@@ -63,6 +64,7 @@ class MovieDetailFragment : Fragment() {
     }
 
     fun setValues(movie : Movie){
+        deleteButton.setOnClickListener { movieDetailViewModel.deleteMovieById(movie.id) }
         release_date.text = getString(R.string.release_date_text) + movie.release_date
         movie_title.text = movie.title
         overview.text = movie.overview
@@ -76,5 +78,7 @@ class MovieDetailFragment : Fragment() {
             .load("https://image.tmdb.org/t/p/w500/" +movie.poster_path)
             .into(movie_Poster)
     }
+
+
 
 }

@@ -3,17 +3,14 @@ package com.example.retrofittest3
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.retrofittest3.database.Movie
 import com.example.retrofittest3.views.MovieRecyclerAdapter
 import com.example.retrofittest3.views.MovieViewModel
-import com.example.retrofittest3.views.ShowDatabaseActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,10 +27,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupView() {
         movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
-        movieViewModel.liveMovieList.observe(this, Observer{
-                newMovieList -> startRecyclerView(newMovieList)
+        movieViewModel.liveWebMovieList.observe(this, Observer{
+
+            //    newMovieList -> startRecyclerView(newMovieList)
+            newWebMovieList ->  movieViewModel.insertToDB(newWebMovieList)
             Log.i("Tag", "Observer observed change in observable")
-            movieViewModel.insertToDB(newMovieList)
+           movieViewModel.getMovieListFromDatabase()
+        })
+        movieViewModel.liveDBMovieList.observe(this,Observer{
+            newDBMovieList -> startRecyclerView(newDBMovieList)
         })
     }
 
@@ -45,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun movieClicked(movie : Movie){
-    //   Toast.makeText(this,"${movie.room_id} ${movie.title}", Toast.LENGTH_SHORT).show()
+    Toast.makeText(this,"${movie.room_id} ${movie.title}", Toast.LENGTH_SHORT).show()
    //  refreshList()
 
         Log.d("movieClicked", "We are here")
@@ -58,5 +60,12 @@ class MainActivity : AppCompatActivity() {
     }
     private fun refreshList(){
         movieViewModel.getMovieList()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i("Tag","inOnResume")
+        movieViewModel.getMovieListFromDatabase()
+
     }
 }

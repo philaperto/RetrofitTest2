@@ -22,5 +22,5 @@ interface MovieDao {
     fun getMoviebyId(id : Int) : LiveData<Movie>
 
     @Query ("Delete from movie_table where id = :id")
-    fun deleteMovieById(id: Int)
+    suspend fun deleteMovieById(id: Int)
 }

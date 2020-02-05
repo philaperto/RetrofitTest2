@@ -66,7 +66,7 @@ class MovieRepository (private val movieDao: MovieDao){
     fun getMovieById(id : Int): LiveData<Movie> {
         return movieDao.getMoviebyId(id)
     }
-    fun deleteMoviebyId(id: Int){
+    suspend fun deleteMoviebyId(id: Int){
         movieDao.deleteMovieById(id)
     }
 }
