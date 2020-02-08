@@ -27,13 +27,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupView() {
         movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+
         movieViewModel.liveWebMovieList.observe(this, Observer{
 
-            //    newMovieList -> startRecyclerView(newMovieList)
+            // newMovieList -> startRecyclerView(newMovieList)
             newWebMovieList ->  movieViewModel.insertToDB(newWebMovieList)
             Log.i("Tag", "Observer observed change in observable")
            movieViewModel.getMovieListFromDatabase()
         })
+
         movieViewModel.liveDBMovieList.observe(this,Observer{
             newDBMovieList -> startRecyclerView(newDBMovieList)
         })
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun movieClicked(movie : Movie){
-    Toast.makeText(this,"${movie.room_id} ${movie.title}", Toast.LENGTH_SHORT).show()
+    Toast.makeText(this,"${movie.id} ${movie.title}", Toast.LENGTH_SHORT).show()
    //  refreshList()
 
         Log.d("movieClicked", "We are here")
@@ -64,8 +66,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        Log.i("Tag","inOnResume")
         movieViewModel.getMovieListFromDatabase()
-
+        Log.i("Tag","inOnResume")
     }
 }

@@ -20,6 +20,7 @@ class MovieRepository (private val movieDao: MovieDao){
     }
     val movieList =  MutableLiveData<List<Movie>>()
 
+
     fun getMovies(context: Context): LiveData<List<Movie>>{
         return if (InternetUtils.isInternetAvailable(context)){
             Log.d("MovieRepo ", "We are in getMoviesFromWebservice")
@@ -53,7 +54,8 @@ class MovieRepository (private val movieDao: MovieDao){
 
      fun getMoviesFromDatabase(): LiveData<List<Movie>> {
         Log.i("Tag","taking from Database @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        return movieDao.getMovieList()
+
+         return movieDao.getMovieList()
     }
 
      suspend fun insertMovies(movies : List<Movie>){
@@ -64,9 +66,25 @@ class MovieRepository (private val movieDao: MovieDao){
          movieDao.deleteAll()
      }
     fun getMovieById(id : Int): LiveData<Movie> {
+
         return movieDao.getMoviebyId(id)
     }
+
     suspend fun deleteMoviebyId(id: Int){
         movieDao.deleteMovieById(id)
+    }
+
+    fun getMovieByRoomId(roomId : Int) : LiveData<Movie>{
+        return movieDao.getMovieByRoomId(roomId)
+    }
+   suspend fun getRawMovieByRoomId(roomId : Int) : Movie {
+        return movieDao.getRawMovieByRoomId(roomId)
+    }
+
+    suspend fun getRawMoviebyId(id : Int) : Movie {
+        return movieDao.getRawMoviebyId(id)
+    }
+    suspend fun getNextMovieUp(roomId: Int) :Movie {
+       return movieDao.getNextMovieUp(roomId)
     }
 }

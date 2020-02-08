@@ -16,6 +16,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.retrofittest3.R
 import com.example.retrofittest3.database.Movie
 import kotlinx.android.synthetic.main.details_fragment_layout.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -60,11 +62,23 @@ class MovieDetailFragment : Fragment() {
        movieDetailViewModel.liveMovie.observe(this, Observer{
 
            newMovie -> if(newMovie!=null)setValues(newMovie)
+
+           Log.i("tag","Fragment_observer observed change in observable")
        })
     }
 
     fun setValues(movie : Movie){
-        deleteButton.setOnClickListener { movieDetailViewModel.deleteMovieById(movie.id) }
+        deleteButton.setOnClickListener {
+            movieDetailViewModel.deleteMovieById(movie.id)
+            activity?.finish()
+        }
+        nextButton.setOnClickListener {
+          /*  (context as CoroutineScope).launch {
+                val nextMovie = movieDetailViewModel.findNextMovieUp(movie.room_id)*/
+             //   Log.i("tag",nextMovie?.title)
+            }
+
+        }
         release_date.text = getString(R.string.release_date_text) + movie.release_date
         movie_title.text = movie.title
         overview.text = movie.overview
