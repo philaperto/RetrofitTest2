@@ -52,7 +52,7 @@ class MovieRepository (private val movieDao: MovieDao){
         return movieList
     }
 
-     fun getMoviesFromDatabase(): LiveData<List<Movie>> {
+      fun getMoviesFromDatabase(): LiveData<List<Movie>> {
         Log.i("Tag","taking from Database @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
 
          return movieDao.getMovieList()
@@ -60,7 +60,7 @@ class MovieRepository (private val movieDao: MovieDao){
 
      suspend fun insertMovies(movies : List<Movie>){
         movieDao.insertAll(movies)
-         Log.i("tag","ruuuuuuuuunnnnniiiiiing")
+         Log.i("tag","writing to database _____---------------")
     }
      suspend fun deleteAll(){
          movieDao.deleteAll()
@@ -85,6 +85,11 @@ class MovieRepository (private val movieDao: MovieDao){
         return movieDao.getRawMoviebyId(id)
     }
     suspend fun getNextMovieUp(roomId: Int) :Movie {
+        Log.i("tag","m@@@@@@@@@@@@@@@@@@@@@de it to repository")
        return movieDao.getNextMovieUp(roomId)
+    }
+
+    suspend fun getNextMovieDown(roomId: Int) :Movie {
+        return movieDao.getNextMovieDown(roomId)
     }
 }

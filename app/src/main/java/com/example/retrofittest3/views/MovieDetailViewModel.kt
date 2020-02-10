@@ -10,6 +10,7 @@ import com.example.retrofittest3.api.MovieRepository
 import com.example.retrofittest3.database.Movie
 import com.example.retrofittest3.database.MovieDatabase
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
@@ -22,6 +23,14 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
     val liveMovie: LiveData<Movie>
         get() = _liveMovie
 
+    private var viewModelJob = Job()
+
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
+    private val _currentMovie = MutableLiveData<Movie>()
+
+    val currentMovie : LiveData<Movie>
+        get() = _currentMovie
 
 
     init{
@@ -38,7 +47,12 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
         viewModelScope.launch{ repository.deleteMoviebyId(id)}
     }
 
-   fun findNextMovieUp(id : Int): Movie? {
-       return viewModelScope.launch {repository.getNextMovieUp(id)  }
+   fun findNextMovieUp(roomId : Int) {
+       Log.i("tag","we got this far@@@@@@@@@@@@@@@@@@@@@@@@@@way")
+       viewModelScope.launch {_currentMovie.value = repository.getNextMovieUp(roomId)  }
    }
+
+    fun findNextMovieDown(roomId: Int){
+        viewModelScope.launch { _currentMovie.value = repository.getNextMovieDown(roomId) }
+    }
 }

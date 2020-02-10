@@ -33,6 +33,9 @@ interface MovieDao {
     @Query ("Select * from movie_table where id = :id")
     suspend fun getRawMoviebyId(id : Int) : Movie
 
-    @Query ("Select * from movie_table where id > :roomId Limit 1 ")
+    @Query ("Select * from movie_table where room_id > :roomId Limit 1 ")
     suspend fun getNextMovieUp (roomId : Int) :Movie
+
+    @Query ("Select * from movie_table where room_id < :roomId Order by room_id desc limit 1")
+    suspend fun getNextMovieDown (roomId: Int) : Movie
 }

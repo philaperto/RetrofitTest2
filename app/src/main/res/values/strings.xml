@@ -6,4 +6,5 @@
     <string name="release_date_text">Release Date :</string>
     <string name="delete_button_text">Delete</string>
     <string name="next_button_text">next</string>
+    <string name="previous_button_text">previous</string>
 </resources>

@@ -65,6 +65,10 @@ class MovieDetailFragment : Fragment() {
 
            Log.i("tag","Fragment_observer observed change in observable")
        })
+       movieDetailViewModel.currentMovie.observe(this, Observer {
+           currentMovie -> Log.i("tag","we got a new current movie : ${currentMovie.title}")
+           setValues(currentMovie)
+       })
     }
 
     fun setValues(movie : Movie){
@@ -73,15 +77,16 @@ class MovieDetailFragment : Fragment() {
             activity?.finish()
         }
         nextButton.setOnClickListener {
-          /*  (context as CoroutineScope).launch {
-                val nextMovie = movieDetailViewModel.findNextMovieUp(movie.room_id)*/
-             //   Log.i("tag",nextMovie?.title)
-            }
+            movieDetailViewModel.findNextMovieUp(movie.room_id)
 
+        }
+        previousButton.setOnClickListener {
+            movieDetailViewModel.findNextMovieDown(movie.room_id)
         }
         release_date.text = getString(R.string.release_date_text) + movie.release_date
         movie_title.text = movie.title
         overview.text = movie.overview
+        Log.i("tag", "movie in setValues : ${movie.title}")
 
         val requestOptions = RequestOptions()
             .placeholder(R.drawable.ic_launcher_background)
