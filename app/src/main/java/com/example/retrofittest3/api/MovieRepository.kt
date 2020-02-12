@@ -5,13 +5,12 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.retrofittest3.database.MovieDao
-import com.example.retrofittest3.database.Movie
-import com.example.retrofittest3.database.Result
+import com.example.retrofittest3.database.*
 import com.example.retrofittest3.util.InternetUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.Exception
 
 class MovieRepository (private val movieDao: MovieDao){
 
@@ -19,6 +18,11 @@ class MovieRepository (private val movieDao: MovieDao){
         Log.i("tag", "MovieRepositoryInitialized@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@MovieRepositoryInitialized")
     }
     val movieList =  MutableLiveData<List<Movie>>()
+    val actorList = MutableLiveData<List<Cast>>()
+
+    private var castClient: MovieDBCastService = CastRetrofitBuilder.apiService
+
+     suspend fun getCast(movieId:Int) = castClient.getActors(movieId)
 
 
     fun getMovies(context: Context): LiveData<List<Movie>>{
@@ -33,17 +37,17 @@ class MovieRepository (private val movieDao: MovieDao){
     
    private fun getMoviesFromWebservice() : MutableLiveData<List<Movie>>{
 
-        val retrofitCall = MovieRetrofitBuilder.apiService.getMovies()
 
+        val retrofitCall = MovieRetrofitBuilder.apiService.getMovies()
 
         retrofitCall.enqueue(object: Callback<Result>{
 
             override fun onFailure(call: Call<Result>, t: Throwable) {
                 movieList.value = null
             }
-
             override fun onResponse(call: Call<Result>, response: Response<Result>) {
                if (response.code() == 200) {
+                  // Log.i("tachchen", "tja@@@@@@@@@@@@@@@")
                    movieList.value = response.body()?.movieList
 
                }
@@ -51,6 +55,7 @@ class MovieRepository (private val movieDao: MovieDao){
         })
         return movieList
     }
+
 
       fun getMoviesFromDatabase(): LiveData<List<Movie>> {
         Log.i("Tag","taking from Database @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")

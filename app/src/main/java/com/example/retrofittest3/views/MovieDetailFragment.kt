@@ -7,17 +7,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.retrofittest3.R
 import com.example.retrofittest3.database.Movie
 import kotlinx.android.synthetic.main.details_fragment_layout.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -26,7 +24,6 @@ class MovieDetailFragment : Fragment() {
     private lateinit var movieDetailViewModel : MovieDetailViewModel
     private var movieId = 0
     companion object {
-
 
         fun newInstance(movieId : Int) : MovieDetailFragment {
             val fragment = MovieDetailFragment()
@@ -54,11 +51,14 @@ class MovieDetailFragment : Fragment() {
         Log.i("Ta@@@@@@@@@@@@@@@@@g", movieId.toString())
         setUpFragment()
 
+
+
     }
 
     fun setUpFragment(){
        movieDetailViewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
        movieDetailViewModel.getMovieById(movieId)
+
        movieDetailViewModel.liveMovie.observe(this, Observer{
 
            newMovie -> if(newMovie!=null)setValues(newMovie)
@@ -69,12 +69,21 @@ class MovieDetailFragment : Fragment() {
            currentMovie -> Log.i("tag","we got a new current movie : ${currentMovie.title}")
            setValues(currentMovie)
        })
+
+
     }
 
     fun setValues(movie : Movie){
         deleteButton.setOnClickListener {
+            /*
             movieDetailViewModel.deleteMovieById(movie.id)
-            activity?.finish()
+            activity?.finish()*/
+
+
+          //  movieDetailViewModel.getCast(movie.id)
+            val fragment = CastFragment.newInstance(movie.id)
+            replaceFragment(fragment)
+
         }
         nextButton.setOnClickListener {
             movieDetailViewModel.findNextMovieUp(movie.room_id)
@@ -96,6 +105,14 @@ class MovieDetailFragment : Fragment() {
             .applyDefaultRequestOptions(requestOptions)
             .load("https://image.tmdb.org/t/p/w500/" +movie.poster_path)
             .into(movie_Poster)
+    }
+
+    fun replaceFragment(fragment: Fragment){
+        val fragmentManager = activity!!.supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.root_layout, fragment)
+        //transaction.addToBackStack(null)
+        transaction.commit()
     }
 
 

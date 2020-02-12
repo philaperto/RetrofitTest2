@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.layout_movie_entry.view.*
 
 class MovieRecyclerAdapter( private val items : List<Movie>, private val clickLalaListener: (Movie) -> Unit ) : RecyclerView.Adapter<MovieRecyclerAdapter.MovieViewHolder>() {
 
-    //private var items : List<Movie> = emptyList()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(LayoutInflater.from(parent.context).
@@ -27,13 +27,6 @@ class MovieRecyclerAdapter( private val items : List<Movie>, private val clickLa
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
 
         holder.bind(items[position], clickLalaListener)
-     //   holder.itemView.setOnClickListener {  clickLalaListener}
-
-      /*  when(holder) {
-            is MovieViewHolder -> {
-                holder.bind(items[position], clickLalaListener)
-            }
-        }*/
     }
 
     override fun getItemCount(): Int {
