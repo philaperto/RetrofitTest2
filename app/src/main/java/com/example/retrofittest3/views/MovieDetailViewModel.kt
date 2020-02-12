@@ -20,7 +20,7 @@ import java.lang.Exception
 class MovieDetailViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository : MovieRepository
-     lateinit var _liveMovie : LiveData<Movie>
+    lateinit var _liveMovie : LiveData<Movie>
 
     val liveMovie: LiveData<Movie>
         get() = _liveMovie

@@ -22,7 +22,17 @@ class MovieRepository (private val movieDao: MovieDao){
 
     private var castClient: MovieDBCastService = CastRetrofitBuilder.apiService
 
-     suspend fun getCast(movieId:Int) = castClient.getActors(movieId)
+    suspend fun getCast(movieId:Int) = castClient.getActors(movieId)
+
+    private var movieByActorClient : MovieDBMoviebyActorService = MovieByActorRetrofitBuilder.apiService
+
+    suspend fun getMoviesByActor(actorId : Int): A_CastInfo {
+
+        val castInfo : A_CastInfo = movieByActorClient.getMovies(actorId)
+        val movieList = castInfo.movie_credits.movieList
+        insertMovies(movieList)
+        return castInfo
+    }
 
 
     fun getMovies(context: Context): LiveData<List<Movie>>{

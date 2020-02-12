@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupView()
-
     }
 
     private fun setupView() {
@@ -50,19 +49,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun movieClicked(movie : Movie){
-    Toast.makeText(this,"${movie.id} ${movie.title}", Toast.LENGTH_SHORT).show()
-   //  refreshList()
-
-        Log.d("movieClicked", "We are here")
-
-      //  Log.i("Tag","----------------Position" + movieAdapter.MovieViewHolder(recyclerView).adapterPosition)
-        // val intent = Intent(this, ShowDatabaseActivity::class.java)
-
         val intent = Intent(this, MovieDetailActivity::class.java)
         intent.putExtra("movieId",movie.id)
         startActivity(intent)
-
     }
+
     private fun refreshList(){
         movieViewModel.getMovieList()
     }

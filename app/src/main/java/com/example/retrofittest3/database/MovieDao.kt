@@ -12,7 +12,7 @@ interface MovieDao {
     @Query ("Select * from movie_table")
     fun getMovieList(): LiveData<List<Movie>>
 
-    @Insert(onConflict = 1)
+    @Insert(onConflict = 5)
     suspend fun insertAll( movies :List<Movie>)
 
     @Query ("Delete from movie_table" )

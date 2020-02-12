@@ -49,9 +49,6 @@ class MovieRecyclerAdapter( private val items : List<Movie>, private val clickLa
             movieTitle.text = movie.title
             itemView.setOnClickListener{clickLiLiListener(movie) }
 
-            //Log.i("Tag","@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-
-
             val requestOptions = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)

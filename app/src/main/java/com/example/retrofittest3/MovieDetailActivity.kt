@@ -16,15 +16,12 @@ class MovieDetailActivity : AppCompatActivity() {
         val selectedMovie = intent.getIntExtra("movieId", 0)
         val fragment = MovieDetailFragment.newInstance(selectedMovie)
         replaceFragment(fragment)
-       // FragmentFactory.loadFragmentClass(MovieDetailFragment())
-
-
     }
+
     fun AppCompatActivity.replaceFragment(fragment: Fragment){
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.root_layout,fragment)
-        //transaction.addToBackStack(null)
         transaction.commit()
     }
 }

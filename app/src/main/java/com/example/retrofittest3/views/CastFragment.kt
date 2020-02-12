@@ -26,7 +26,6 @@ class CastFragment : Fragment() {
 
     companion object {
 
-
         fun newInstance(movieId: Int): CastFragment {
             val fragment = CastFragment()
             val bundle = Bundle()
@@ -38,11 +37,14 @@ class CastFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         castViewModel = ViewModelProvider(this).get(CastViewModel::class.java)
+
         if (arguments != null){
           movieId = arguments!!.getInt("movieId")
-            Log.i("tag", "movie im neuen Fragment $movieId")
+            Log.i("tag-CastFragment", "movie im neuen Fragment $movieId")
         }
+
         castViewModel.getCast(movieId)
 
         castViewModel.actorList.observe(this, Observer{
@@ -52,7 +54,7 @@ class CastFragment : Fragment() {
     }
 
     private fun initviewPager(castList: List<Cast>){
-        val adapter = ViewPagerAdapter(castList)
+        val adapter = ViewPagerAdapter(castList, {cast : Cast -> actorClicked(cast)})
         viewPager.adapter = adapter
     }
 
@@ -64,7 +66,20 @@ class CastFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_cast, container, false)
     }
 
+    private fun actorClicked(cast : Cast){
+        Log.i("Tag", "Another clickListener seems to be responding")
+        val fragment = MoviesByActorFragment.newInstance(cast.id)
+        replaceFragment(fragment)
 
+    }
+
+    fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = activity!!.supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.root_layout, fragment)
+        //transaction.addToBackStack(null)
+        transaction.commit()
+    }
 
 
 }

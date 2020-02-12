@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.retrofittest3.api.MovieRepository
 import com.example.retrofittest3.database.Cast
 import com.example.retrofittest3.database.MovieDatabase
+import com.example.retrofittest3.database.MovieDetailResult
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
@@ -26,10 +27,11 @@ class CastViewModel (application: Application) : AndroidViewModel(application){
         get()=_actorList
 
 
-    fun getCast(movieId:Int){
+   /* fun getCast(movieId:Int){
 
         viewModelScope.launch {
             try{
+                Log.i("log","movieId_supplied: $movieId")
                 var rawCast = repository.getCast(movieId).credits.cast
                 filterCast(rawCast)
                 // _actorList.value = repository.getCast(movieId).credits.cast
@@ -37,7 +39,21 @@ class CastViewModel (application: Application) : AndroidViewModel(application){
                 Log.i("Log","$ex.message")
             }
         }
+    } */
+
+    fun getCast(movieId:Int){
+        viewModelScope.launch {
+            try{
+                var rawCast : MovieDetailResult = repository.getCast(movieId)
+
+                var rawCastList = rawCast.credits.cast
+                filterCast(rawCastList)
+            }catch (ex:Exception){
+            }
+        }
     }
+
+
     private fun filterCast(rawCast:List<Cast>){
         val rawSize : Int = rawCast.size
         Log.i("tag", "size_before: $rawSize ")
@@ -50,6 +66,5 @@ class CastViewModel (application: Application) : AndroidViewModel(application){
         val filteredSize : Int = filteredCast.size
         Log.i("tag", "size_after: $filteredSize ")
         _actorList.value = filteredCast
-
     }
 }

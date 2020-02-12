@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -50,12 +48,10 @@ class MovieDetailFragment : Fragment() {
         }
         Log.i("Ta@@@@@@@@@@@@@@@@@g", movieId.toString())
         setUpFragment()
-
-
-
     }
 
     fun setUpFragment(){
+        // Log.i("tag","in detailfragment")
        movieDetailViewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
        movieDetailViewModel.getMovieById(movieId)
 
@@ -69,29 +65,18 @@ class MovieDetailFragment : Fragment() {
            currentMovie -> Log.i("tag","we got a new current movie : ${currentMovie.title}")
            setValues(currentMovie)
        })
-
-
     }
 
     fun setValues(movie : Movie){
-        deleteButton.setOnClickListener {
+        castButton.setOnClickListener {
             /*
             movieDetailViewModel.deleteMovieById(movie.id)
             activity?.finish()*/
 
-
-          //  movieDetailViewModel.getCast(movie.id)
             val fragment = CastFragment.newInstance(movie.id)
             replaceFragment(fragment)
+        }
 
-        }
-        nextButton.setOnClickListener {
-            movieDetailViewModel.findNextMovieUp(movie.room_id)
-
-        }
-        previousButton.setOnClickListener {
-            movieDetailViewModel.findNextMovieDown(movie.room_id)
-        }
         release_date.text = getString(R.string.release_date_text) + movie.release_date
         movie_title.text = movie.title
         overview.text = movie.overview
@@ -111,7 +96,6 @@ class MovieDetailFragment : Fragment() {
         val fragmentManager = activity!!.supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.root_layout, fragment)
-        //transaction.addToBackStack(null)
         transaction.commit()
     }
 

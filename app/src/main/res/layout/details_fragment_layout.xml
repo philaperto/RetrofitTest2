@@ -61,36 +61,10 @@
         app:layout_constraintTop_toBottomOf="@id/release_date"
         android:paddingBottom="6dp"
         android:gravity="center_horizontal" />
-    <Button
-        android:id="@+id/previousButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/previous_button_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/overview"
 
-        />
 
     <Button
-        android:id="@+id/nextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/next_button_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/previousButton"
-
-        />
-
-    <Button
-        android:id="@+id/deleteButton"
+        android:id="@+id/castButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -99,7 +73,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/delete_button_text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/nextButton"
+        app:layout_constraintTop_toBottomOf="@id/overview"
 
          />
         </androidx.constraintlayout.widget.ConstraintLayout>
