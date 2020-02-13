@@ -12,7 +12,8 @@ import com.example.retrofittest3.R
 import com.example.retrofittest3.database.Cast
 import kotlinx.android.synthetic.main.cast_layout.view.*
 
-class ViewPagerAdapter(private val castList:List<Cast>, private val clickListener:(Cast) -> Unit) : RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>(){
+class ViewPagerAdapter(private val castList:List<Cast>,
+                       private val clickListener:(Cast) -> Unit) : RecyclerView.Adapter<ViewPagerAdapter.ViewPagerViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.cast_layout,parent,false)

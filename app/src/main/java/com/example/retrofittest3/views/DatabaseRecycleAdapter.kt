@@ -1,6 +1,6 @@
 package com.example.retrofittest3.views
 
-import android.content.Context
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofittest3.R
 import com.example.retrofittest3.database.Movie
-import kotlinx.android.synthetic.main.database_entry_layout.view.*
+
 
 class DatabaseRecycleAdapter : RecyclerView.Adapter<DatabaseRecycleAdapter.DatabaseViewHolder>() {
 
     private  var items = emptyList<Movie>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DatabaseRecycleAdapter.DatabaseViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DatabaseViewHolder {
        return DatabaseViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.database_entry_layout,parent,false))
     }
 

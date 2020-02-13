@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
 
         movieViewModel.liveWebMovieList.observe(this, Observer{
 
-            // newMovieList -> startRecyclerView(newMovieList)
             newWebMovieList ->  movieViewModel.insertToDB(newWebMovieList)
             Log.i("Tag", "Observer observed change in observable")
            movieViewModel.getMovieListFromDatabase()
@@ -45,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
         movieAdapter = MovieRecyclerAdapter(newMovieList,{ movie : Movie -> movieClicked(movie) })
         recyclerView.adapter = movieAdapter
-       // movieAdapter.submitList(newMovieList)
     }
 
     private fun movieClicked(movie : Movie){

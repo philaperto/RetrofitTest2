@@ -26,33 +26,15 @@ class CastViewModel (application: Application) : AndroidViewModel(application){
     val actorList : LiveData<List<Cast>>
         get()=_actorList
 
-
-   /* fun getCast(movieId:Int){
-
-        viewModelScope.launch {
-            try{
-                Log.i("log","movieId_supplied: $movieId")
-                var rawCast = repository.getCast(movieId).credits.cast
-                filterCast(rawCast)
-                // _actorList.value = repository.getCast(movieId).credits.cast
-            }catch (ex: Exception){
-                Log.i("Log","$ex.message")
-            }
-        }
-    } */
-
     fun getCast(movieId:Int){
         viewModelScope.launch {
             try{
-                var rawCast : MovieDetailResult = repository.getCast(movieId)
-
-                var rawCastList = rawCast.credits.cast
-                filterCast(rawCastList)
+                var rawCast  = repository.getCast(movieId).credits.cast
+                filterCast(rawCast)
             }catch (ex:Exception){
             }
         }
     }
-
 
     private fun filterCast(rawCast:List<Cast>){
         val rawSize : Int = rawCast.size

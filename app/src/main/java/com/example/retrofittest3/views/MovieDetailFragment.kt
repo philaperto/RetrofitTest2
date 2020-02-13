@@ -33,7 +33,6 @@ class MovieDetailFragment : Fragment() {
             }
         }
 
-
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -46,12 +45,11 @@ class MovieDetailFragment : Fragment() {
         if (arguments != null){
             movieId = arguments!!.getInt("movieId")
         }
-        Log.i("Ta@@@@@@@@@@@@@@@@@g", movieId.toString())
         setUpFragment()
     }
 
-    fun setUpFragment(){
-        // Log.i("tag","in detailfragment")
+    private fun setUpFragment(){
+
        movieDetailViewModel = ViewModelProvider(this).get(MovieDetailViewModel::class.java)
        movieDetailViewModel.getMovieById(movieId)
 
@@ -67,12 +65,8 @@ class MovieDetailFragment : Fragment() {
        })
     }
 
-    fun setValues(movie : Movie){
+    private fun setValues(movie : Movie){
         castButton.setOnClickListener {
-            /*
-            movieDetailViewModel.deleteMovieById(movie.id)
-            activity?.finish()*/
-
             val fragment = CastFragment.newInstance(movie.id)
             replaceFragment(fragment)
         }
@@ -92,13 +86,10 @@ class MovieDetailFragment : Fragment() {
             .into(movie_Poster)
     }
 
-    fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment){
         val fragmentManager = activity!!.supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.root_layout, fragment)
         transaction.commit()
     }
-
-
-
 }

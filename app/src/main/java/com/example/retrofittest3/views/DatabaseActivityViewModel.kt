@@ -7,6 +7,9 @@ import com.example.retrofittest3.api.MovieRepository
 import com.example.retrofittest3.database.Movie
 import com.example.retrofittest3.database.MovieDatabase
 
+
+//TODO Review
+
 class DatabaseActivityViewModel (application: Application) : AndroidViewModel(application){
     private val repository : MovieRepository
     lateinit var _liveMovieList : LiveData<List<Movie>>
@@ -18,9 +21,7 @@ class DatabaseActivityViewModel (application: Application) : AndroidViewModel(ap
         val movieDao = MovieDatabase.getDatabase(application).movieDao()
         repository = MovieRepository(movieDao)
         getMovieList()
-
     }
-
     fun getMovieList(){
         _liveMovieList = repository.getMoviesFromDatabase()
     }

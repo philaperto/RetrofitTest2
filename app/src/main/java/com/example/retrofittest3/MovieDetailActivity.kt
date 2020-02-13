@@ -18,7 +18,7 @@ class MovieDetailActivity : AppCompatActivity() {
         replaceFragment(fragment)
     }
 
-    fun AppCompatActivity.replaceFragment(fragment: Fragment){
+    private fun AppCompatActivity.replaceFragment(fragment: Fragment){
         val fragmentManager = supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.root_layout,fragment)

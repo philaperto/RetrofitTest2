@@ -23,7 +23,6 @@ class MovieRecyclerAdapter( private val items : List<Movie>, private val clickLa
             inflate(R.layout.layout_movie_entry, parent, false))
     }
 
-
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
 
         holder.bind(items[position], clickLalaListener)

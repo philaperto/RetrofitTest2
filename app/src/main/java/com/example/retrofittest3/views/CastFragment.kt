@@ -50,7 +50,6 @@ class CastFragment : Fragment() {
         castViewModel.actorList.observe(this, Observer{
                 castList -> initviewPager(castList)
         })
-
     }
 
     private fun initviewPager(castList: List<Cast>){
@@ -62,7 +61,6 @@ class CastFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_cast, container, false)
     }
 
@@ -70,16 +68,12 @@ class CastFragment : Fragment() {
         Log.i("Tag", "Another clickListener seems to be responding")
         val fragment = MoviesByActorFragment.newInstance(cast.id)
         replaceFragment(fragment)
-
     }
 
     fun replaceFragment(fragment: Fragment) {
         val fragmentManager = activity!!.supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.root_layout, fragment)
-        //transaction.addToBackStack(null)
         transaction.commit()
     }
-
-
 }

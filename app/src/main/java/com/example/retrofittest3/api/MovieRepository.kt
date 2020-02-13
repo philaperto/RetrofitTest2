@@ -18,7 +18,6 @@ class MovieRepository (private val movieDao: MovieDao){
         Log.i("tag", "MovieRepositoryInitialized@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@MovieRepositoryInitialized")
     }
     val movieList =  MutableLiveData<List<Movie>>()
-    val actorList = MutableLiveData<List<Cast>>()
 
     private var castClient: MovieDBCastService = CastRetrofitBuilder.apiService
 
@@ -27,13 +26,14 @@ class MovieRepository (private val movieDao: MovieDao){
     private var movieByActorClient : MovieDBMoviebyActorService = MovieByActorRetrofitBuilder.apiService
 
     suspend fun getMoviesByActor(actorId : Int): A_CastInfo {
-
+    //TODO funktion macht zwei sachen?
         val castInfo : A_CastInfo = movieByActorClient.getMovies(actorId)
         val movieList = castInfo.movie_credits.movieList
         insertMovies(movieList)
         return castInfo
     }
 
+    private var movieClient : MovieDBService = MovieRetrofitBuilder.apiService
 
     fun getMovies(context: Context): LiveData<List<Movie>>{
         return if (InternetUtils.isInternetAvailable(context)){
@@ -47,9 +47,7 @@ class MovieRepository (private val movieDao: MovieDao){
     
    private fun getMoviesFromWebservice() : MutableLiveData<List<Movie>>{
 
-
         val retrofitCall = MovieRetrofitBuilder.apiService.getMovies()
-
         retrofitCall.enqueue(object: Callback<Result>{
 
             override fun onFailure(call: Call<Result>, t: Throwable) {
@@ -57,15 +55,12 @@ class MovieRepository (private val movieDao: MovieDao){
             }
             override fun onResponse(call: Call<Result>, response: Response<Result>) {
                if (response.code() == 200) {
-                  // Log.i("tachchen", "tja@@@@@@@@@@@@@@@")
                    movieList.value = response.body()?.movieList
-
                }
             }
         })
         return movieList
     }
-
 
       fun getMoviesFromDatabase(): LiveData<List<Movie>> {
         Log.i("Tag","taking from Database @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")

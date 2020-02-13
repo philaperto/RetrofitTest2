@@ -45,6 +45,7 @@ class MoviesByActorFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         moviesByActorViewModel = ViewModelProvider(this).get(MoviesByActorViewModel::class.java)
 
         if (arguments != null){
@@ -53,6 +54,7 @@ class MoviesByActorFragment : Fragment() {
         }
 
         moviesByActorViewModel.getMovieList(actorId)
+
         moviesByActorViewModel.movieList.observe(this, Observer{
             movieList -> startRecyclerView(movieList)
         })
@@ -61,16 +63,14 @@ class MoviesByActorFragment : Fragment() {
         recycler_view_by_actor.layoutManager = LinearLayoutManager(activity)
         movieAdapter = MovieRecyclerAdapter(movieList, {movie : Movie -> movieClicked(movie)})
         recycler_view_by_actor.adapter = movieAdapter
-
     }
 
     private fun movieClicked(movie : Movie){
        val fragment = MovieDetailFragment.newInstance(movie.id)
         replaceFragment(fragment)
-
-
     }
-    fun replaceFragment(fragment: Fragment){
+
+    private fun replaceFragment(fragment: Fragment){
         val fragmentManager = activity!!.supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.root_layout, fragment)

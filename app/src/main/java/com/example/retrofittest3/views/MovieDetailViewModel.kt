@@ -25,21 +25,14 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
     val liveMovie: LiveData<Movie>
         get() = _liveMovie
 
-
-
-
-
     private val _currentMovie = MutableLiveData<Movie>()
 
     val currentMovie : LiveData<Movie>
         get() = _currentMovie
 
-
     init{
         val movieDao = MovieDatabase.getDatabase(application).movieDao()
         repository = MovieRepository(movieDao)
-
-
     }
 
     fun getMovieById(id:Int){
@@ -51,7 +44,7 @@ class MovieDetailViewModel(application: Application) : AndroidViewModel(applicat
     }
 
    fun findNextMovieUp(roomId : Int) {
-       Log.i("tag","we got this far@@@@@@@@@@@@@@@@@@@@@@@@@@way")
+       Log.i("tag","we got this far")
        viewModelScope.launch {_currentMovie.value = repository.getNextMovieUp(roomId)  }
    }
 
