@@ -3,6 +3,7 @@ package com.example.retrofittest3
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,10 +26,16 @@ class MainActivity : AppCompatActivity() {
         setupView()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.cast_menu,menu)
+        return true
+    }
+
     private fun setupView() {
         movieViewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
 
-        movieViewModel.liveWebMovieList.observe(this, Observer{
+      /*  movieViewModel.liveWebMovieList.observe(this, Observer{
 
             newWebMovieList ->  movieViewModel.insertToDB(newWebMovieList)
             Log.i("Tag", "Observer observed change in observable")
@@ -37,6 +44,10 @@ class MainActivity : AppCompatActivity() {
 
         movieViewModel.liveDBMovieList.observe(this,Observer{
             newDBMovieList -> startRecyclerView(newDBMovieList)
+        })*/
+
+        movieViewModel.liveWebMovieList.observe(this,Observer{
+            movieList -> startRecyclerView(movieList)
         })
     }
 
@@ -58,7 +69,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        movieViewModel.getMovieListFromDatabase()
         Log.i("Tag","inOnResume")
     }
 }

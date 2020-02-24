@@ -32,8 +32,8 @@ class MovieRecyclerAdapter( private val items : List<Movie>, private val clickLa
             return items.size
     }
 
-   /* fun submitList(movieList : List<Movie>){
-        items = movieList
+   /* fun submitList(movieListByActor : List<Movie>){
+        items = movieListByActor
     }*/
 
     inner class MovieViewHolder (

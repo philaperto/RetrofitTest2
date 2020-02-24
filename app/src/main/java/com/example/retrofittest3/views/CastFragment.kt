@@ -1,18 +1,11 @@
 package com.example.retrofittest3.views
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
 
 import com.example.retrofittest3.R
 import com.example.retrofittest3.database.Cast
@@ -35,9 +28,14 @@ class CastFragment : Fragment() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.cast_menu,menu)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setHasOptionsMenu(true)
         castViewModel = ViewModelProvider(this).get(CastViewModel::class.java)
 
         if (arguments != null){
@@ -48,11 +46,11 @@ class CastFragment : Fragment() {
         castViewModel.getCast(movieId)
 
         castViewModel.actorList.observe(this, Observer{
-                castList -> initviewPager(castList)
+                castList -> initViewPager(castList)
         })
     }
 
-    private fun initviewPager(castList: List<Cast>){
+    private fun initViewPager(castList: List<Cast>){
         val adapter = ViewPagerAdapter(castList, {cast : Cast -> actorClicked(cast)})
         viewPager.adapter = adapter
     }
@@ -70,7 +68,7 @@ class CastFragment : Fragment() {
         replaceFragment(fragment)
     }
 
-    fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = activity!!.supportFragmentManager
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.root_layout, fragment)

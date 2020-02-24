@@ -15,6 +15,7 @@ interface MovieDao {
     @Insert(onConflict = 5)
     suspend fun insertAll( movies :List<Movie>)
 
+
     @Query ("Delete from movie_table" )
     suspend fun deleteAll()
 

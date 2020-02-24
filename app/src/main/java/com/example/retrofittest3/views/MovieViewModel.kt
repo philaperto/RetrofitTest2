@@ -1,10 +1,11 @@
 package com.example.retrofittest3.views
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
+import com.example.retrofittest3.Repository.MovieRepository
 import com.example.retrofittest3.database.MovieDatabase
 
-import com.example.retrofittest3.api.*
 import com.example.retrofittest3.database.Movie
 import com.example.retrofittest3.util.InternetUtils
 import kotlinx.coroutines.launch
@@ -13,27 +14,23 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository : MovieRepository
 
-    lateinit var _liveWebMovieList : LiveData<List<Movie>>
+    private var _liveWebMovieList = MutableLiveData<List<Movie>>()
     val liveWebMovieList: LiveData<List<Movie>>
         get() = _liveWebMovieList
-
-    lateinit var _liveDBMovieList : LiveData<List<Movie>>
-    val liveDBMovieList: LiveData<List<Movie>>
-        get() = _liveDBMovieList
 
    init{
       val movieDao = MovieDatabase.getDatabase(application).movieDao()
           repository = MovieRepository(movieDao)
         getMovieList()
-        getMovieListFromDatabase()
-
-    }
-    fun getMovieListFromDatabase(){
-        _liveDBMovieList = repository.getMoviesFromDatabase()
     }
 
     fun getMovieList(){
-      _liveWebMovieList = repository.getMovies(getApplication())
+      viewModelScope.launch {  try {
+          _liveWebMovieList.value = repository.getMoviesFromWebKotlinStyle().movieList
+      }catch (ex:Exception){
+          Log.i("tag", "$ex.message")
+      }
+      }
     }
 
     fun insertToDB( movies : List<Movie>){
@@ -44,5 +41,4 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
         }
         }
     }
-
 }

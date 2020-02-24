@@ -59,6 +59,7 @@ class MoviesByActorFragment : Fragment() {
             movieList -> startRecyclerView(movieList)
         })
     }
+
     private fun startRecyclerView(movieList : List<Movie>){
         recycler_view_by_actor.layoutManager = LinearLayoutManager(activity)
         movieAdapter = MovieRecyclerAdapter(movieList, {movie : Movie -> movieClicked(movie)})

@@ -6,10 +6,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.retrofittest3.api.MovieRepository
+import com.example.retrofittest3.Repository.MovieRepository
 import com.example.retrofittest3.database.Cast
 import com.example.retrofittest3.database.MovieDatabase
-import com.example.retrofittest3.database.MovieDetailResult
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
